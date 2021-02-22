@@ -11,7 +11,6 @@ class Lib(object):
             size = os.stat(fileName).st_size
         except: 
             size = 0
-            
         return size
 
     @staticmethod
