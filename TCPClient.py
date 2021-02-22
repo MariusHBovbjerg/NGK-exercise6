@@ -12,9 +12,15 @@ def main(argv):
         s.connect((HOST, PORT))
         print("Connection established.")
         dir = "/home/ase/Desktop/NGK-exercise6/"
-        dir = dir+argv[1]
+        dir = dir+argv[0]
         s.sendall((dir+"\0").encode())
-        receiveFile(dir,s)
+        length = Lib.readTextTCP(s)
+        print("Length of file is:", length,"bytes.")
+        if(int(length)):
+            print("Receiving file.")
+            receiveFile(dir,s)
+        else:
+            print("File did not exist or was empty.")
         s.close()
         print("Connection closed")
     
