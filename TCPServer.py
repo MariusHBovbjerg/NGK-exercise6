@@ -3,7 +3,7 @@ import socket
 from lib import Lib
 
 HOST = ""
-PORT = 9001
+PORT = 9000
 BUFSIZE = 1000
 
 def main(argv):
@@ -13,29 +13,28 @@ def main(argv):
         while True:
             conn, addr = s.accept()
             while conn:
-                print('Connected by ', addr)
+                print('Connected by', addr, ".")
                 
                 data = Lib.readTextTCP(conn)
-                print("yo ", data, " ", Lib.check_File_Exists(data))
                 if (Lib.check_File_Exists(data)):
-                    print(":)")
                     sendFile(data,conn)
                 
                 conn.close()
                 conn = None
+                print("Connection closed")
 
 def sendFile(fileName, conn):
     file = open(fileName,"r")
     TEXTBUF = file.read(BUFSIZE)
-    print("Read: ",len(TEXTBUF))
+    print("Read:",len(TEXTBUF), ".")
     while(TEXTBUF):
         #Lib.writeTextTCP(TEXTBUF,conn)
         conn.send(TEXTBUF.encode())
         TEXTBUF = file.read(BUFSIZE)
-        print(len(TEXTBUF))
+        print("Read:",len(TEXTBUF),".")
     conn.send(b'\0')
     file.close
-    print("File closed")
+    print("File closed.")
 
 if __name__ == "__main__":
    main(sys.argv[1:])
