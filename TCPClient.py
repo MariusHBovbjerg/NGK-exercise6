@@ -11,8 +11,10 @@ def main(argv):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.connect((HOST, PORT))
         print("Connection established.")
-        s.sendall(b'/home/ase/Desktop/NGK-exercise6/hello.txt\0')
-        receiveFile("/home/ase/Desktop/NGK-exercise6/hello.txt",s)
+        dir = "/home/ase/Desktop/NGK-exercise6/"
+        dir = dir+argv[1]
+        s.sendall((dir+"\0").encode())
+        receiveFile(dir,s)
         s.close()
         print("Connection closed")
     
