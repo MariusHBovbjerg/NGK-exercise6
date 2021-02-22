@@ -16,9 +16,14 @@ def main(argv):
                 print('Connected by', addr, ".")
                 
                 data = Lib.readTextTCP(conn)
-                if (Lib.check_File_Exists(data)):
+                filesize = Lib.check_File_Exists(data)
+                if (filesize):
+                    filesizeStr = str(filesize) + "\0"
+                    conn.send(filesizeStr.encode())
                     sendFile(data,conn)
-                
+                else:
+                    filesizeStr = str(filesize) + "\0"
+                    conn.send(filesizeStr.encode())
                 conn.close()
                 conn = None
                 print("Connection closed")
