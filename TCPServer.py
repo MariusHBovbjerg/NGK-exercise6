@@ -10,15 +10,19 @@ def main(argv):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.bind((HOST, PORT))
         s.listen()
-        conn, addr = s.accept()
-        with conn:
-            print('Connected by ', addr)
-            while True:
+        while True:
+            conn, addr = s.accept()
+            while conn:
+                print('Connected by ', addr)
+                
                 data = Lib.readTextTCP(conn)
                 print("yo ", data, " ", Lib.check_File_Exists(data))
                 if (Lib.check_File_Exists(data)):
                     print(":)")
                     sendFile(data,conn)
+                
+                conn.close()
+                conn = None
 
 def sendFile(fileName, conn):
     file = open(fileName,"r")
