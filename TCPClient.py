@@ -10,8 +10,9 @@ BUFSIZE = 1000
 def main(argv):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.connect((HOST, PORT))
-        s.sendall(b'/home/ase/Desktop/hello.txt\0')
-        receiveFile("/home/ase/Desktop/hello.txt",s)
+        s.sendall(b'/home/ase/Desktop/NGK-exercise6/hello.txt\0')
+        receiveFile("/home/ase/Desktop/NGK-exercise6/hello.txt",s)
+        s.close()
     
 def receiveFile(fileName,  conn):
     file = open(fileName,"w")
