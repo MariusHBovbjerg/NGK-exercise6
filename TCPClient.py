@@ -25,11 +25,11 @@ def main(argv):
         print("Connection closed")
     
 def receiveFile(fileName,  conn):
-    file = open(fileName,"w")
+    file = open(fileName,"wb")
     print("Writing file.")
     TEXTBUF = conn.recv(BUFSIZE)
     while(TEXTBUF):
-        file.write(TEXTBUF.decode())
+        file.write(TEXTBUF)
         TEXTBUF = conn.recv(BUFSIZE)
         print("Read:",len(TEXTBUF),".")
     file.close()
