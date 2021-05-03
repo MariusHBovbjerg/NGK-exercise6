@@ -15,7 +15,7 @@ def main(argv):
         dir = dir+argv[0]
         s.sendall((dir+"\0").encode())
         length = Lib.readTextTCP(s)
-        print("Length of file is:", length,"bytes.")
+        print("Length of file is:", length," bytes.")
         if(int(length)):
             print("Receiving file.")
             receiveFile(dir,s)
@@ -27,7 +27,11 @@ def main(argv):
 def receiveFile(fileName,  conn):
     file = open(fileName,"w")
     print("Writing file.")
-    file.write(Lib.readTextTCP(conn))
+    TEXTBUF = conn.recv(BUFSIZE)
+    while(TEXTBUF):
+        file.write(TEXTBUF.decode())
+        TEXTBUF = conn.recv(BUFSIZE)
+        print("Read:",len(TEXTBUF),".")
     file.close()
     print("File closed.")
 
