@@ -31,11 +31,11 @@ def main(argv):
                 print("Connection closed")
 
 def sendFile(fileName, conn):
-    file = open(fileName,"r")
+    file = open(fileName,"rb")
     TEXTBUF = file.read(BUFSIZE)
     print("Read:",len(TEXTBUF), ".")
     while(TEXTBUF):
-        conn.send(TEXTBUF.encode())
+        conn.send(TEXTBUF)
         TEXTBUF = file.read(BUFSIZE)
         print("Read:",len(TEXTBUF),".")
     file.close
